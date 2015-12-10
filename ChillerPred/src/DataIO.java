@@ -1,4 +1,4 @@
-
+// i am in eclipse
 /*import java.io.File;
 import java.io.FileInputStream;
 import java.nio.MappedByteBuffer;
@@ -20,19 +20,7 @@ import weka.classifiers.functions.LinearRegression;
 
 public class DataIO {
 
-    public static void main(String[] argv) throws Exception {
-        // 
-    	Instances data = getDatasetDB("Chiller");
-    	data.setClassIndex(0);
-        
-        LinearRegression model= new LinearRegression();
-        model.buildClassifier(data);
-        Evaluation eva=new Evaluation(data);
-        eva.evaluateModel(model, data);
-        System.out.println(model.toString());
-        System.out.println(eva.toSummaryString());
-    	
-    }
+    
 
     public static Connection getDBConn() {
         try {
@@ -58,7 +46,14 @@ public class DataIO {
         Statement st = null;
         ResultSet rs = null;
         Connection conn = getDBConn();
-        String query = Config.selectQuery;
+        String query;
+        switch (tableName){
+        case "all": query = Config.selectAll; break;
+        case "chiller1": query = Config.selectChiller1; break;
+        case "chiller2": query = Config.selectChiller2; break;
+        default : query = Config.selectAll; break;
+        }
+             
         st = conn.createStatement();
         rs = st.executeQuery(query);
 
