@@ -14,7 +14,8 @@ public class Config {
     public static String connUser = "ecoadm";
     public static String connPassword = "ev093qer"; 
     
-    public static String selectAll = "select powertotal,conflow1,conflow2,conin1,conin2,conout1,conout2,evaflow1,evaflow2,evain1,evain2,evaout1,evaout2,temp,now from \"chiller_cb2\"";
+    public static String selectAll = "select consumptiontotal,conflow1,conflow2,conin1,conin2,conout1,conout2,evaflow1,evaflow2,evain1,evain2,evaout1,evaout2,temp,now from \"chiller_cbp2\"";
     public static String selectChiller1 = "select power1,conflow1,conin1,conout1,evaflow1,evain1,evaout1,temp,now from \"chiller_cb2\"";
     public static String selectChiller2 = "select power2,conflow2,conin2,conout2,evaflow2,evain2,evaout2,temp,now from \"chiller_cb2\"";
+    public static String selectConsumption = "select avg(powertotal) as onehrconsump,avg(conflow1),avg(conflow2),avg(conin1),avg(conin2),avg(conout1),avg(conout2),avg(evaflow1),avg(evaflow2),avg(evain1),avg(evain2),avg(evaout1),avg(evaout2),avg(temp),avg(now) from \"chiller_cbp2\" group by hourstamp";
 }

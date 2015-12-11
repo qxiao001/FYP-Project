@@ -20,24 +20,24 @@ public class Prediction {
 		// prediction start
 		//Instances data = DataIO.getDatasetDB("all");
 		//data.setClassIndex(0);
-		Instances data1 = DataIO.getDatasetDB("chiller1");
+		Instances data1 = DataIO.getDatasetDB("all");
 		data1.setClassIndex(0);
 		//clean data
-		cleanNegativeValues(data1);
+		cleanNegativeValues(data1,1,4);
 		/*Instances data2 = DataIO.getDatasetDB("chiller2");
 		data2.setClassIndex(0);
 		Instances dataTree = new Instances(data1);
 		dataTree.setClassIndex(0);*/
 		
-		// develop costMatrix
+		/*// develop costMatrix
 					CostMatrix cm = new CostMatrix(2);
 					cm.initialize();
 					cm.setElement(0,1,10);
-					cm.setElement(1,0,1);
+					cm.setElement(1,0,1);*/
 		
 		
-		Instances data1_train=removePercentage(data1, true, 75);
-		Instances data1_test=removePercentage(data1, false, 75);
+		Instances data1_train=removePercentage(data1, true, 50);
+		Instances data1_test=removePercentage(data1, false, 50);
 		Instances dataTree = new Instances(data1_train);
 		dataTree.setClassIndex(0);
 		dataTree=powerToBinary(dataTree);
@@ -150,15 +150,16 @@ public class Prediction {
 
 	}
 
-	public static void cleanNegativeValues(Instances data) {
+	public static Instances cleanNegativeValues(Instances data,int flow1, int flow2) {
 		for (int i = 0; i < data.size(); i++) {
-			if (data.instance(i).value(1) < 0) {
+			if (data.instance(i).value(flow1) < 0) {
 				data.instance(i).setValue(1, 0);
 			}
-			if (data.instance(i).value(4) < 0) {
+			if (data.instance(i).value(flow2) < 0) {
 				data.instance(i).setValue(4, 0);
 			}
 		}
+		return data;
 	}
 
 	public static void evaluateModel(Instances data, Classifier model)
@@ -167,5 +168,5 @@ public class Prediction {
 		eva.evaluateModel(model, data);
 		System.out.println(eva.toSummaryString());
 	}
-
+	
 }

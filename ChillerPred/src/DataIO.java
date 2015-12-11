@@ -51,6 +51,7 @@ public class DataIO {
         case "all": query = Config.selectAll; break;
         case "chiller1": query = Config.selectChiller1; break;
         case "chiller2": query = Config.selectChiller2; break;
+        case "consumption" : query = Config.selectConsumption; break; 
         default : query = Config.selectAll; break;
         }
              
