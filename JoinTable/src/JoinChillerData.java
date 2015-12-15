@@ -4,6 +4,7 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.sql.Connection;
+import java.util.Calendar;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,16 +20,21 @@ public class JoinChillerData {
 	static Timestamp chillercombts;
 	static String ultra_max;
 	static String power_max;
+	static String yyyy_mm="2015_11";
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-
+        getyyyy_mm();
 		joinDB("updateMax");
 		getStamp();
 		joinDB("indiv");
 		joinDB("comb");
 		joinDB("final");
 
+	}
+	public static void getyyyy_mm(){
+	
+	    yyyy_mm=Calendar.YEAR+"_"+Calendar.MONTH;
 	}
 
 	public static Connection getDBConn() {
@@ -94,14 +100,19 @@ public class JoinChillerData {
 		}
 
 		query = readFile(queryPath);
+		
 
 		switch (tableName) {
-
+		
+		case "updateMax":
+			query = query.replace("#yyyy_mm#", yyyy_mm);
+            break;
 		case "indiv":
 			query =query.replace("#ultra_min#", ultra_min); 
 			query =query.replace("#power_min#", power_min);
 			query =query.replace("#ultra_max#", ultra_max);
 			query =query.replace("#power_max#", power_max);
+			query = query.replace("#yyyy_mm#", yyyy_mm);
 			
 			break;
 		case "comb":
