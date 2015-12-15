@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class JoinChillerData {
 
@@ -27,14 +29,19 @@ public class JoinChillerData {
         getyyyy_mm();
 		joinDB("updateMax");
 		getStamp();
+		integrityCheck();
 		joinDB("indiv");
 		joinDB("comb");
 		joinDB("final");
 
 	}
+	
 	public static void getyyyy_mm(){
 	
-	    yyyy_mm=Calendar.YEAR+"_"+Calendar.MONTH;
+		Calendar cal = Calendar.getInstance();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy_MM");
+		yyyy_mm=dateFormat.format(cal.getTime());
+	    System.out.println(yyyy_mm);
 	}
 
 	public static Connection getDBConn() {
@@ -75,6 +82,19 @@ public class JoinChillerData {
 		}
 	}
 
+	private static void integrityCheck() throws Exception {
+		// check if max is equal to or less than min. if equal: no new data is updated, if less, jump to a new month alr.
+		if (Integer.parseInt(ultra_min)>Integer.parseInt(ultra_max) && Integer.parseInt(power_min)>Integer.parseInt(power_max)){
+			//update min to be 0 and 0. 
+			System.out.println("we are going to use new month data");
+			joinDB("updateMin");
+			ultra_min="-1";power_min="-1";
+		}
+		else if (Integer.parseInt(ultra_min)==Integer.parseInt(ultra_max)|| Integer.parseInt(power_min)==Integer.parseInt(power_max)){
+			System.out.println("Opps, there is no new data in database.\n Please wait and try again later.\n Sorry for inconvinience");
+			System.exit(1);
+		}
+	}
 	public static void joinDB(String tableName) throws Exception {
 		Statement st = null;
 		ResultSet rs = null;
@@ -82,6 +102,9 @@ public class JoinChillerData {
 		String query;
 		String queryPath;
 		switch (tableName) {
+		case "updateMin":
+			queryPath=Config.updateMinSQLPath;
+			break;
 		case "updateMax":
 			queryPath = Config.updateMaxSQLPath;
 			break;
@@ -113,7 +136,7 @@ public class JoinChillerData {
 			query =query.replace("#ultra_max#", ultra_max);
 			query =query.replace("#power_max#", power_max);
 			query = query.replace("#yyyy_mm#", yyyy_mm);
-			
+			System.out.println(query);
 			break;
 		case "comb":
 			query =query.replace("#chiller1ts#", chiller1ts.toString());

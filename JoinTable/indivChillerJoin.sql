@@ -10,9 +10,9 @@ and (e.time_stamp-p.time_stamp)< INTERVAL '30 seconds'
 and (p.time_stamp-e.time_stamp)< INTERVAL '30 seconds'  
 and (c.time_stamp-p.time_stamp)< INTERVAL '30 seconds' 
 and (p.time_stamp-c.time_stamp) < INTERVAL '30 seconds'
-and c.ultrasonic_flow_modbus_log_seq > #ultra_min# and c.ultrasonic_flow_modbus_log_seq < #ultra_max# 
-and e.ultrasonic_flow_modbus_log_seq > #ultra_min# and e.ultrasonic_flow_modbus_log_seq < #ultra_max# 
-and p.meter_log_seq > #power_min# and p.meter_log_seq < #power_max#;
+and c.ultrasonic_flow_modbus_log_seq > #ultra_min# and c.ultrasonic_flow_modbus_log_seq <= #ultra_max# 
+and e.ultrasonic_flow_modbus_log_seq > #ultra_min# and e.ultrasonic_flow_modbus_log_seq <= #ultra_max# 
+and p.meter_log_seq > #power_min# and p.meter_log_seq <= #power_max#;
 
 insert into "chiller2pt" 
 select DISTINCT ON (p.time_stamp) 'chiller2' as chiller_name,p.time_stamp as powerts2,c.time_stamp as conts2,e.time_stamp as evats2,
@@ -25,9 +25,9 @@ and (e.time_stamp-p.time_stamp)< INTERVAL '30 seconds'
 and (p.time_stamp-e.time_stamp)< INTERVAL '30 seconds'  
 and (c.time_stamp-p.time_stamp)< INTERVAL '30 seconds' 
 and (p.time_stamp-c.time_stamp) < INTERVAL '30 seconds'
-and c.ultrasonic_flow_modbus_log_seq > #ultra_min# and c.ultrasonic_flow_modbus_log_seq < #ultra_max# 
-and e.ultrasonic_flow_modbus_log_seq > #ultra_min# and e.ultrasonic_flow_modbus_log_seq < #ultra_max# 
-and p.meter_log_seq > #power_min# and p.meter_log_seq < #power_max#;
+and c.ultrasonic_flow_modbus_log_seq > #ultra_min# and c.ultrasonic_flow_modbus_log_seq <= #ultra_max# 
+and e.ultrasonic_flow_modbus_log_seq > #ultra_min# and e.ultrasonic_flow_modbus_log_seq <= #ultra_max# 
+and p.meter_log_seq > #power_min# and p.meter_log_seq <= #power_max#;
 
 update "stamps"  set 
 ultra_min = ultra_max,
