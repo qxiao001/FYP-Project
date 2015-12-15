@@ -166,7 +166,8 @@ public class Prediction {
 			throws Exception {
 		Evaluation eva = new Evaluation(data);
 		eva.evaluateModel(model, data);
-		System.out.println(eva.toSummaryString());
+		System.out.println(model.toString()+eva.toSummaryString());
+		
 	}
 	
 }
