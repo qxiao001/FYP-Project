@@ -1,5 +1,8 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
@@ -12,6 +15,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
+
+
 
 public class JoinChillerData {
 
@@ -33,9 +39,35 @@ public class JoinChillerData {
 		joinDB("indiv");
 		joinDB("comb");
 		joinDB("final");
+		//callR();
+		
+
+		
 
 	}
 	
+	private static void callR() {
+		// TODO Auto-generated method stub
+		/*	Rengine re = new JRIEngine(new String[] { "--no-save" }, new RCallback(), false);
+		re.parseAndEval("source(\"/scriptname.R\")");
+		re.close()*/
+		BufferedReader reader = null;
+        Process shell = null;
+        try {
+            shell = Runtime.getRuntime().exec(new String[] { "C:/Program Files/R/R-3.2.2/bin/Rscript", "regression.R" });
+
+            reader = new BufferedReader(new InputStreamReader(shell.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+
 	public static void getyyyy_mm(){
 	
 		Calendar cal = Calendar.getInstance();
@@ -79,6 +111,7 @@ public class JoinChillerData {
 			chillercombts = rs.getTimestamp(5);
 			ultra_max = rs.getString(6);
 			power_max = rs.getString(7);
+			//System.out.println(ultra_min);
 		}
 	}
 
@@ -92,7 +125,9 @@ public class JoinChillerData {
 		}
 		else if (Integer.parseInt(ultra_min)==Integer.parseInt(ultra_max)|| Integer.parseInt(power_min)==Integer.parseInt(power_max)){
 			System.out.println("Opps, there is no new data in database.\n Please wait and try again later.\n Sorry for inconvinience");
+			callR();
 			System.exit(1);
+			
 		}
 	}
 	public static void joinDB(String tableName) throws Exception {
