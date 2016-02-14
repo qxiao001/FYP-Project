@@ -1,7 +1,7 @@
 insert into "chiller_cbpt2" 
 select distinct on (c.timestamp)
 date_trunc('hour',c.timestamp)as hourstamp,c.*, t.temp, r.now
-from "chiller_cbpt" c, "taiwan_temp" t, "taiwan_rain" r 
+from "chiller_cbpt" c, "taiwan_temp_#yyyy_mm#" t, "taiwan_rain_#yyyy_mm#" r 
 where (c.timestamp-t.timestamp)< INTERVAL '600 seconds'
 and (t.timestamp-c.timestamp)< INTERVAL '600 seconds'  
 and (c.timestamp-r.timestamp)< INTERVAL '600 seconds' 

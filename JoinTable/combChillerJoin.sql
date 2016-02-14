@@ -15,4 +15,6 @@ and (b.powerts2-'#chiller2ts#'::timestamp) > '30 seconds';
 
 update "stamps" set
 chiller1ts = (select powerts1 from "chiller1pt" order by powerts1 desc limit 1),
-chiller2ts = (select powerts2 from "chiller2pt" order by powerts2 desc limit 1)
+chiller2ts = (select powerts2 from "chiller2pt" order by powerts2 desc limit 1),
+ultra_min = ultra_max,
+power_min = power_max
