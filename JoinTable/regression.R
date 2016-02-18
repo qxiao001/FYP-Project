@@ -79,5 +79,5 @@ results <- results[order(results$hourstamp),]
 time = c(1:nrow(results))
 plot(time,results$power,col="blue",main="predicted against actual ",xlab="time",ylab="power",type='l')
 lines(time,results$`predall$fit`,col="red")
-dbWriteTable(con, "test", value=results, overwrite=TRUE,row.names=TRUE)
-dbDisconnect(con)
+#dbWriteTable(con, "test", value=results, overwrite=TRUE,row.names=TRUE)
+#dbDisconnect(con)

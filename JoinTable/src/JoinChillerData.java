@@ -31,6 +31,7 @@ public class JoinChillerData {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
+		//System.console().writer().println("hello from console");
 		getyyyy_mm();
 		getMax5432();
 		joinDB("updateMax");
