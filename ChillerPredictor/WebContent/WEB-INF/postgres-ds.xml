@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources>
+<datasource jndi-name="java:jboss/postgresDS" pool-name="postgresDS" enabled="true" use-java-context="true" use-ccm="false">
+                    <connection-url>jdbc:postgresql://132.147.88.190:5433/postgres</connection-url>
+                    <driver>postgresql-9.4-1201.jdbc41.jar</driver>
+                    <pool>
+                        <max-pool-size>30</max-pool-size>
+                    </pool>
+                    <security>
+                        <user-name>ecoadm</user-name>
+                        <password>ev093qer</password>
+                    </security>
+                </datasource></datasources>
